@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventory : MonoBehaviour
+public class Player : MonoBehaviour
 {
+    public MouseItem mouseItem = new MouseItem();
     public InventoryObject inventory;
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             inventory.SaveDatabase();
         }
@@ -22,7 +23,7 @@ public class PlayerInventory : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         var item = other.GetComponent<GroundItem>();
-        if(item)
+        if (item)
         {
             inventory.AddItem(new Item(item.item), 1);
             Destroy(other.gameObject);

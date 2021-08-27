@@ -99,7 +99,7 @@ public class DisplayInventory : MonoBehaviour
     {
         var mouseObject = new GameObject();
         var rectTransform = mouseObject.AddComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(100, 100);
+        rectTransform.sizeDelta = new Vector2(75, 75);
         mouseObject.transform.SetParent(transform.parent);
         if(itemsDisplayed[obj].ID >= 0)
         {
