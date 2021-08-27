@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e662eeca725df4eb12cd9f86d2f066, type: 3}
   m_Name: HeadArmor
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4879264701631305655, guid: e842a3ebed1332046a6004346283fdf7, type: 3}
+  Id: 0
+  uiDysplay: {fileID: 1753892755352629699, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
+    type: 3}
   type: 1
   description: 
   attackBonus: 0

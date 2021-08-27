@@ -56,6 +56,7 @@ public class DisplayInventory : MonoBehaviour
             InventorySlot slot = inventory.Container.Items[i];
             var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
             obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[slot.item.Id].uiDysplay;
+            obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
             itemsDisplayed.Add(slot, obj);
         }
