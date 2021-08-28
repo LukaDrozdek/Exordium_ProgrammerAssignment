@@ -15,6 +15,6 @@ MonoBehaviour:
   Id: 1
   uiDysplay: {fileID: -6210545735052317571, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
-  type: 2
+  type: 6
   description: Gold
   buffs: []

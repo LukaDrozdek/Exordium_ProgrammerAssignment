@@ -10,11 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06e662eeca725df4eb12cd9f86d2f066, type: 3}
-  m_Name: BodyArmor
+  m_Name: Boots
   m_EditorClassIdentifier: 
-  Id: 0
-  uiDysplay: {fileID: 141063693582682956, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
+  Id: 6
+  uiDysplay: {fileID: -5551615300509145317, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
-  type: 5
-  description: BodyArmor
-  buffs: []
+  type: 4
+  description: 
+  buffs:
+  - attributes: 0
+    value: 0
+    min: 2
+    max: 10
+  - attributes: 2
+    value: 0
+    min: 5
+    max: 20

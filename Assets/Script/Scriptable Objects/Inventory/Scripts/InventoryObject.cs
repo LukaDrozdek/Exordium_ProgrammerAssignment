@@ -90,7 +90,8 @@ public class InventoryObject : ScriptableObject
     [ContextMenu("Clear")]
     public void Clear()
     {
-        Container = new Inventory();
+        Container.Clear();
+        
     }
 }
 
@@ -99,11 +100,19 @@ public class InventoryObject : ScriptableObject
 public class Inventory
 {
     public InventorySlot[] Items = new InventorySlot[40];
+    public void Clear()
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].UpdateSlot(-1, new Item(), 0);
+        }
+    }
 }
 
 [System.Serializable]
 public class InventorySlot
 {
+    public ItemType[] AllowerItems = new ItemType[0];
     public UserInterface parent;
     public int ID = -1;
     public Item item;
@@ -133,5 +142,21 @@ public class InventorySlot
     public void AddAmount(int value)
     {
         amount += value;
+    }
+
+    public bool CanPlaceInSlot(ItemObject _item)
+    {
+        if(AllowerItems.Length <= 0)
+        {
+            return true;
+        }
+        for (int i = 0; i < AllowerItems.Length; i++)
+        {
+            if(_item.type == AllowerItems[i])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

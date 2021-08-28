@@ -15,8 +15,7 @@ public class PlayerMovment : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    void Update()
+    public void FixedUpdate()
     {
         MovePlayer();
     }

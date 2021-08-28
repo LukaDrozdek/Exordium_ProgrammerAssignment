@@ -15,7 +15,7 @@ MonoBehaviour:
   Id: 4
   uiDysplay: {fileID: -1335680090277886149, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
-  type: 1
+  type: 3
   description: 
   buffs:
   - attributes: 1
