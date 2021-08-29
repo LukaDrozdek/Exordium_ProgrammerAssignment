@@ -2,17 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModifiableInt : MonoBehaviour
+public delegate void ModifiedEvent();
+[System.Serializable]
+public class ModifiableInt
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private int baseValue;
+    public int BaseValue { get { return baseValue; } set { baseValue = value; UpdateModifiedValue(); } }
+
+    [SerializeField]
+    private int modifiedValue;
+    public int ModifiedValue { get { return modifiedValue; } private set { modifiedValue = value; } }
+
+    public List<IModifier> modifiers = new List<IModifier>();
+
+    public event ModifiedEvent ValueModified;
+    public ModifiableInt(ModifiedEvent method = null)
     {
-        
+        modifiedValue = BaseValue;
+        if (method != null)
+            ValueModified += method;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RegsiterModEvent(ModifiedEvent method)
     {
-        
+        ValueModified += method;
     }
+    public void UnregsiterModEvent(ModifiedEvent method)
+    {
+        ValueModified -= method;
+    }
+
+    public void UpdateModifiedValue()
+    {
+        var valueToAdd = 0;
+        for (int i = 0; i < modifiers.Count; i++)
+        {
+            modifiers[i].AddValue(ref valueToAdd);
+        }
+        ModifiedValue = baseValue + valueToAdd;
+        if (ValueModified != null)
+            ValueModified.Invoke();
+    }
+
+    public void AddModifier(IModifier _modifier)
+    {
+        modifiers.Add(_modifier);
+        UpdateModifiedValue();
+    }
+    public void RemoveModifier(IModifier _modifier)
+    {
+        modifiers.Remove(_modifier);
+        UpdateModifiedValue();
+    }
+
 }

@@ -2636,7 +2636,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620185637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.52, y: -0.598, z: 0}
+  m_LocalPosition: {x: -0.52, y: -0.65, z: 0}
   m_LocalScale: {x: 0.60757, y: 0.60757, z: 0.60757}
   m_Children: []
   m_Father: {fileID: 1642784112}
@@ -4045,6 +4045,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 33edcb59e6ad7b84b97ed550d15d4538, type: 2}
   equipment: {fileID: 11400000, guid: eeae166c8c73ef049922deded5cc7ecd, type: 2}
+  attribute:
+  - type: 0
+    value:
+      baseValue: 0
+      modifiedValue: 0
+  - type: 1
+    value:
+      baseValue: 0
+      modifiedValue: 0
+  - type: 2
+    value:
+      baseValue: 0
+      modifiedValue: 0
+  - type: 3
+    value:
+      baseValue: 0
+      modifiedValue: 0
 --- !u!1 &2041557704
 GameObject:
   m_ObjectHideFlags: 0

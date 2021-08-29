@@ -6,11 +6,19 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
 
+public enum InterFaceType
+{
+    Inventory,
+    Equipment,
+    Chest
+}
+
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/ Inventory")]
 public class InventoryObject : ScriptableObject
 {
     public string savePath;
     public ItemDatabaseObject database;
+    public InterFaceType type;
     public Inventory Container;
     public InventorySlot[] GetSlots { get { return Container.Slots; } }
 
@@ -143,7 +151,7 @@ public delegate void SlotUpdated(InventorySlot _slot);
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemType[] AllowerItems = new ItemType[0];
+    public ItemType[] AllowedItems = new ItemType[0];
     [System.NonSerialized]
     public UserInterface parent;
     [System.NonSerialized]
@@ -205,13 +213,13 @@ public class InventorySlot
 
     public bool CanPlaceInSlot(ItemObject _itemObject)
     {
-        if (AllowerItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
+        if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
         {
             return true;
         }
-        for (int i = 0; i < AllowerItems.Length; i++)
+        for (int i = 0; i < AllowedItems.Length; i++)
         {
-            if (_itemObject.type == AllowerItems[i])
+            if (_itemObject.type == AllowedItems[i])
             {
                 return true;
             }
