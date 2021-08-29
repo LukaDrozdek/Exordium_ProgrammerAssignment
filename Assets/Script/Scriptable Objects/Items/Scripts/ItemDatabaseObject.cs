@@ -7,15 +7,15 @@ using UnityEngine;
 public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiver
 {
 
-    public ItemObject[] Items;
+    public ItemObject[] ItemObject;
 
     [ContextMenu("Update ID's")]
     public void UpdateID()
     {
-        for (int i = 0; i < Items.Length; i++)
+        for (int i = 0; i < ItemObject.Length; i++)
         {
-            if (Items[i].data.Id != i)
-                Items[i].data.Id = i;
+            if (ItemObject[i].data.Id != i)
+                ItemObject[i].data.Id = i;
         }
     }
     public void OnAfterDeserialize()
