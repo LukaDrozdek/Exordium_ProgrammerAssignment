@@ -12,40 +12,86 @@ public class InventoryObject : ScriptableObject
     public string savePath;
     public ItemDatabaseObject database;
     public Inventory Container;
+    public InventorySlot[] GetSlots { get { return Container.Slots; } }
 
 
-    public void AddItem(Item _item, int _amount)
+    public bool AddItem(Item _item, int _amount)
     {
-        if (_item.buffs.Length > 0)
+        if (EmptySlotCount <= 0)
+        {
+            return false;
+        }
+        InventorySlot slot = FindItemOnInventory(_item);
+        if (database.ItemObject[_item.Id].Stacable == false || slot == null)
         {
             SetEmptySlot(_item, _amount);
-            return;
+            return true;
         }
+        slot.AddAmount(_amount);
+        return true;
+    }
 
-        for (int i = 0; i < Container.Items.Length; i++)
+    public int EmptySlotCount
+    {
+        get
         {
-            if (Container.Items[i].ID == _item.Id)
+            int counter = 0;
+            for (int i = 0; i < GetSlots.Length; i++)
             {
-                Container.Items[i].AddAmount(_amount);
-                return;
+                if (GetSlots[i].item.Id <= -1)
+                {
+                    counter++;
+                }
+
+            }
+            return counter;
+        }
+    }
+
+    public InventorySlot FindItemOnInventory(Item _item)
+    {
+        for (int i = 0; i < GetSlots.Length; i++)
+        {
+            if (GetSlots[i].item.Id == _item.Id)
+            {
+                return GetSlots[i];
             }
         }
-        SetEmptySlot(_item, _amount);
-
-
+        return null;
     }
 
     public InventorySlot SetEmptySlot(Item _item, int _amount)
     {
-        for (int i = 0; i < Container.Items.Length; i++)
+        for (int i = 0; i < GetSlots.Length; i++)
         {
-            if(Container.Items[i].ID <= -1)
+            if (GetSlots[i].item.Id <= -1)
             {
-                Container.Items[i].UpdateSlot(_item.Id, _item, _amount);
-                return Container.Items[i];
+                GetSlots[i].UpdateSlot(_item, _amount);
+                return GetSlots[i];
             }
         }
         return null;
+    }
+
+    public void SwapItems(InventorySlot item1, InventorySlot item2)
+    {
+        if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
+        {
+            InventorySlot temp = new InventorySlot(item2.item, item2.amount);
+            item2.UpdateSlot(item1.item, item1.amount);
+            item1.UpdateSlot(temp.item, temp.amount);
+        }
+
+    }
+    public void RemoveItem(Item _item)
+    {
+        for (int i = 0; i < GetSlots.Length; i++)
+        {
+            if (GetSlots[i].item == _item)
+            {
+                GetSlots[i].UpdateSlot(null, 0);
+            }
+        }
     }
 
     [ContextMenu("Save")]
@@ -62,14 +108,19 @@ public class InventoryObject : ScriptableObject
     {
         IFormatter formatter = new BinaryFormatter();
         Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-        Container = (Inventory)formatter.Deserialize(stream);
+        Inventory newContainer = (Inventory)formatter.Deserialize(stream);
+        for (int i = 0; i < GetSlots.Length; i++)
+        {
+            GetSlots[i].UpdateSlot(newContainer.Slots[i].item, newContainer.Slots[i].amount);
+        }
         stream.Close();
     }
 
     [ContextMenu("Clear")]
     public void Clear()
     {
-        Container = new Inventory();
+        Container.Clear();
+
     }
 }
 
@@ -77,39 +128,94 @@ public class InventoryObject : ScriptableObject
 [System.Serializable]
 public class Inventory
 {
-    public InventorySlot[] Items = new InventorySlot[40];
+    public InventorySlot[] Slots = new InventorySlot[40];
+    public void Clear()
+    {
+        for (int i = 0; i < Slots.Length; i++)
+        {
+            Slots[i].RemoveItem();
+        }
+    }
 }
+
+public delegate void SlotUpdated(InventorySlot _slot);
 
 [System.Serializable]
 public class InventorySlot
 {
-    public int ID = -1;
+    public ItemType[] AllowerItems = new ItemType[0];
+    [System.NonSerialized]
+    public UserInterface parent;
+    [System.NonSerialized]
+    public GameObject slotDisplay;
+    [System.NonSerialized]
+    public SlotUpdated OnAfterUpdate;
+    [System.NonSerialized]
+    public SlotUpdated OnBeforeUpdate;
     public Item item;
     public int amount;
 
+    public ItemObject ItemObject
+    {
+        get
+        {
+            if (item.Id >= 0)
+            {
+                return parent.inventory.database.ItemObject[item.Id];
+            }
+            return null;
+        }
+    }
+
     public InventorySlot()
     {
-        ID = -1;
-        item = null;
-        amount = 0;
+
+        UpdateSlot(new Item(), 0);
     }
 
-    public InventorySlot(int _id, Item _item, int _amount)
+    public InventorySlot(Item _item, int _amount)
     {
-        ID = _id;
-        item = _item;
-        amount = _amount;
+        UpdateSlot(_item, _amount);
     }
 
-    public void UpdateSlot(int _id, Item _item, int _amount)
+    public void UpdateSlot(Item _item, int _amount)
     {
-        ID = _id;
+        if (OnBeforeUpdate != null)
+        {
+            OnBeforeUpdate.Invoke(this);
+        }
         item = _item;
         amount = _amount;
+
+        if(OnAfterUpdate != null)
+        {
+            OnAfterUpdate.Invoke(this);
+        }
+    }
+
+    public void RemoveItem()
+    {
+        UpdateSlot(new Item(), 0);
     }
 
     public void AddAmount(int value)
     {
-        amount += value;
+        UpdateSlot(item, amount += value);
+    }
+
+    public bool CanPlaceInSlot(ItemObject _itemObject)
+    {
+        if (AllowerItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
+        {
+            return true;
+        }
+        for (int i = 0; i < AllowerItems.Length; i++)
+        {
+            if (_itemObject.type == AllowerItems[i])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

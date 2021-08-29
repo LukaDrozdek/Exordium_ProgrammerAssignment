@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa3d98e34595fe4e8807c2592e117c8, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  Id: 1
   uiDysplay: {fileID: -6210545735052317571, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
-  type: 2
+  Stacable: 1
+  type: 6
   description: Gold
-  buffs: []
+  data:
+    Name: 
+    Id: 1
+    buffs: []

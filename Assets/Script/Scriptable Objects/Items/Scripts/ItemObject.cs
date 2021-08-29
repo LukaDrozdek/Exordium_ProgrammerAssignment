@@ -5,7 +5,11 @@ using UnityEngine;
 public enum ItemType
 {
     Food,
-    Equipment,
+    Helmet,
+    Weapon,
+    Shield,
+    Boots,
+    Chest,
     Default
 }
 
@@ -19,13 +23,13 @@ public enum Attributes
 
 public abstract class ItemObject : ScriptableObject
 {
-    public int Id;
     public Sprite uiDysplay;
+    public bool Stacable;
     public ItemType type;
 
-    [TextArea(15,20)]
+    [TextArea(15, 20)]
     public string description;
-    public ItemBuff[] buffs;
+    public Item data = new Item();
 
     public Item CreateItem()
     {
@@ -33,24 +37,30 @@ public abstract class ItemObject : ScriptableObject
         return newItem;
     }
 
-    
+
 }
 
 [System.Serializable]
 public class Item
 {
     public string Name;
-    public int Id;
+    public int Id = -1;
     public ItemBuff[] buffs;
+
+    public Item()
+    {
+        Name = "";
+        Id = -1;
+    }
     public Item(ItemObject item)
     {
         Name = item.name;
-        Id = item.Id;
-        buffs = new ItemBuff[item.buffs.Length];
+        Id = item.data.Id;
+        buffs = new ItemBuff[item.data.buffs.Length];
         for (int i = 0; i < buffs.Length; i++)
-        {     
-            buffs[i] = new ItemBuff(item.buffs[i].min, item.buffs[i].max);
-            buffs[i].attributes = item.buffs[i].attributes;
+        {
+            buffs[i] = new ItemBuff(item.data.buffs[i].min, item.data.buffs[i].max);
+            buffs[i].attributes = item.data.buffs[i].attributes;
         }
     }
 }
