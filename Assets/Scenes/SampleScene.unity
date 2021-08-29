@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 079b9ae6b00b8874a917bc5960b61612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2018628968}
+  player: {fileID: 0}
   inventory: {fileID: 11400000, guid: 33edcb59e6ad7b84b97ed550d15d4538, type: 2}
   inventoryPrefab: {fileID: 5902226600566226001, guid: e8c28c8e4eb60df41bba3f3117dbe63b,
     type: 3}
@@ -1690,7 +1690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b620164f4eefce84898771e054360451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2018628968}
+  player: {fileID: 0}
   inventory: {fileID: 11400000, guid: eeae166c8c73ef049922deded5cc7ecd, type: 2}
   slots:
   - {fileID: 644906493}
@@ -4044,6 +4044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 33edcb59e6ad7b84b97ed550d15d4538, type: 2}
+  equipment: {fileID: 11400000, guid: eeae166c8c73ef049922deded5cc7ecd, type: 2}
 --- !u!1 &2041557704
 GameObject:
   m_ObjectHideFlags: 0

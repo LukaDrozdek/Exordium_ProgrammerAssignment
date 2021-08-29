@@ -132,7 +132,7 @@ public class Inventory
     {
         for (int i = 0; i < Items.Length; i++)
         {
-            Items[i].UpdateSlot(new Item(), 0);
+            Items[i].RemoveItem();
         }
     }
 }
@@ -160,7 +160,7 @@ public class InventorySlot
     public InventorySlot()
     {
 
-        item = null;
+        item = new Item();
         amount = 0;
     }
 
