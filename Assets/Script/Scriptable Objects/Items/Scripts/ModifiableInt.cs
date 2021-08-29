@@ -21,7 +21,9 @@ public class ModifiableInt
     {
         modifiedValue = BaseValue;
         if (method != null)
+        {
             ValueModified += method;
+        }
     }
 
     public void RegsiterModEvent(ModifiedEvent method)
@@ -42,7 +44,9 @@ public class ModifiableInt
         }
         ModifiedValue = baseValue + valueToAdd;
         if (ValueModified != null)
+        {
             ValueModified.Invoke();
+        }
     }
 
     public void AddModifier(IModifier _modifier)
