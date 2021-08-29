@@ -29,31 +29,7 @@ public abstract class UserInterface : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateSlots();
-    }
-
-    public void UpdateSlots()
-    {
-        foreach (KeyValuePair<GameObject, InventorySlot> _slot in slotsOnInterface)
-        {
-            if (_slot.Value.item.Id >= 0)
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDysplay;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
-            }
-            else
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
-            }
-        }
-    }
-
-    public void UpdateDisplay()
-    {
-
+        slotsOnInterface.UpdateSlotDisplay();
     }
 
     public abstract void CreateSlots();
@@ -91,21 +67,7 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnDragStart(GameObject obj)
     {
-        if (slotsOnInterface[obj].item.Id <= -1)
-        {
-            return;
-        }
-
-        var mouseObject = new GameObject();
-        var rectTransform = mouseObject.AddComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent);
-        var image = mouseObject.AddComponent<Image>();
-        image.sprite = slotsOnInterface[obj].ItemObject.uiDysplay;
-        image.raycastTarget = false;
-
-
-        MouseData.tempItemBeingDragged = mouseObject;
+        MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
 
     public void OnDragEnd(GameObject obj)
@@ -131,6 +93,21 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
+    public GameObject CreateTempItem(GameObject obj)
+    {
+        GameObject tempItem = null;
+        if (slotsOnInterface[obj].item.Id >= 0)
+        {
+            tempItem = new GameObject();
+            var rt = tempItem.AddComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(75, 75);
+            tempItem.transform.SetParent(transform.parent);
+            var img = tempItem.AddComponent<Image>();
+            img.sprite = slotsOnInterface[obj].ItemObject.uiDysplay;
+            img.raycastTarget = false;
+        }
+        return tempItem;
+    }
 
 }
 
@@ -139,4 +116,26 @@ public static class MouseData
     public static UserInterface interfaceMouseIsOver;
     public static GameObject tempItemBeingDragged;
     public static GameObject slotHoveredOver;
+}
+
+public static class ExtensionMethods
+{
+    public static void UpdateSlotDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
+    {
+        foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
+        {
+            if (_slot.Value.item.Id >= 0)
+            {
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDysplay;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
+            }
+            else
+            {
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            }
+        }
+    }
 }
