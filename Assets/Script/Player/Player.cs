@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class Player : MonoBehaviour
     public InventoryObject equipment;
 
     public Attribute[] attribute;
+    public TextMeshProUGUI agility;
+    public TextMeshProUGUI intellect;
+    public TextMeshProUGUI stamina;
+    public TextMeshProUGUI strenght;
 
     private void Start()
     {
+        
         for (int i = 0; i < attribute.Length; i++)
         {
             attribute[i].SetParent(this);
@@ -63,7 +69,7 @@ public class Player : MonoBehaviour
             case InterFaceType.Inventory:
                 break;
             case InterFaceType.Equipment:
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.inventory.type, ", Allowed Items: ", string.Join(", ", _slot.AllowedItems)));
+               // print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.inventory.type, ", Allowed Items: ", string.Join(", ", _slot.AllowedItems)));
                 for (int i = 0; i < _slot.item.buffs.Length; i++)
                 {
                     for (int j = 0; j < attribute.Length; j++)
@@ -71,6 +77,7 @@ public class Player : MonoBehaviour
                         if (attribute[j].type == _slot.item.buffs[i].attributes)
                         {
                             attribute[j].value.RemoveModifier(_slot.item.buffs[i]);
+                            
                         }
                     }
                 }
@@ -92,7 +99,7 @@ public class Player : MonoBehaviour
             case InterFaceType.Inventory:
                 break;
             case InterFaceType.Equipment:
-                print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.inventory.type, ", Allowed Items: ", string.Join(", ", _slot.AllowedItems)));
+               // print(string.Concat("Placed ", _slot.ItemObject, " on ", _slot.parent.inventory.type, ", Allowed Items: ", string.Join(", ", _slot.AllowedItems)));
                 for (int i = 0; i < _slot.item.buffs.Length; i++)
                 {
                     for (int j = 0; j < attribute.Length; j++)
@@ -110,12 +117,33 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-
-
-    public void AttributeModified(Attribute attribute)
+    public void aaa(Attributes attributes, InventorySlot _slot)
     {
-        Debug.Log(string.Concat(attribute.type, " was update: ", attribute.value.ModifiedValue));
+      
     }
+
+
+    public void AttributeModifiedDisplay(Attribute attribute)
+    {
+        if (attribute.type.ToString() == "Agility")
+        {
+            agility.text = string.Concat("Agility: " ,attribute.value.ModifiedValue);
+        }
+        if (attribute.type.ToString() == "Intellect")
+        {
+            intellect.text = string.Concat("Intellect: ", attribute.value.ModifiedValue);
+        }
+        if (attribute.type.ToString() == "Stamina")
+        {
+            stamina.text = string.Concat("Stamina: ", attribute.value.ModifiedValue);
+        }
+        if (attribute.type.ToString() == "Strenght")
+        {
+            strenght.text = string.Concat("Strenght: ", attribute.value.ModifiedValue);
+        }
+
+    }
+
 
     private void OnApplicationQuit()
     {
@@ -138,6 +166,6 @@ public class Attribute
     }
     public void AttributeModified()
     {
-        parent.AttributeModified(this);
+        parent.AttributeModifiedDisplay(this);
     }
 }
