@@ -2,24 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType
-{
-    Food,
-    Helmet,
-    Weapon,
-    Shield,
-    Boots,
-    Chest,
-    Default
-}
+public enum ItemType {Food, Helmet, Weapon, Shield, Boots, Chest, Default}
 
-public enum Attributes
-{
-    Agility,
-    Intellect,
-    Stamina,
-    Strenght
-}
+public enum Attributes{Agility, Intellect, Stamina, Strenght}
 
 public abstract class ItemObject : ScriptableObject
 {

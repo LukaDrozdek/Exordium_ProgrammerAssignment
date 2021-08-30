@@ -6,12 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
 
-public enum InterFaceType
-{
-    Inventory,
-    Equipment,
-    Chest
-}
+public enum InterFaceType{Inventory, Equipment, Chest}
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/ Inventory")]
 public class InventoryObject : ScriptableObject

@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI intellect;
     public TextMeshProUGUI stamina;
     public TextMeshProUGUI strenght;
+    public List<GameObject> setGameObjectInPool = new List<GameObject>();
+    public TextMeshProUGUI UiInventory;
 
     private void Start()
     {
@@ -41,6 +43,10 @@ public class Player : MonoBehaviour
             inventory.LoadDatabase();
             equipment.LoadDatabase();
         }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            CreateItemFromPool();
+        }
     }
 
 
@@ -52,8 +58,35 @@ public class Player : MonoBehaviour
             Item _item = new Item(item.item);
             if (inventory.AddItem(_item, 1))
             {
-                Destroy(other.gameObject);
+                other.gameObject.SetActive(false);
+                setGameObjectInPool.Add(other.gameObject);
+               // Destroy(other.gameObject);
             }
+            else
+            {
+                Debug.Log("Inventori id full");
+                UiInventory.text = "Inventori is full";
+                Invoke("UiInventoryOff", 1);
+
+            }
+        }
+    }
+
+    public void UiInventoryOff()
+    {
+        UiInventory.text = "";
+    }
+
+    public void CreateItemFromPool()
+    {
+        int random = Random.Range(0, setGameObjectInPool.Count);
+        if (setGameObjectInPool.Count > 0)
+        {
+            setGameObjectInPool[random].SetActive(true);
+        }
+        if(setGameObjectInPool.Count > 0)
+        {
+            setGameObjectInPool.RemoveAt(random);
         }
     }
 
