@@ -28,6 +28,10 @@ public class UiManager : MonoBehaviour
         {
             UiAttributsOpenClose();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseGame();
+        }
     }
     public void UiInventoryOpenClose()
     {
@@ -91,5 +95,10 @@ public class UiManager : MonoBehaviour
             UiButtonsPanel.SetActive(true);
         }
 ;
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 }

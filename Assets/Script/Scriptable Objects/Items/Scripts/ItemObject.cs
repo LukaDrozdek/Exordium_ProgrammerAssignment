@@ -8,6 +8,9 @@ public enum Attributes{Agility, Intellect, Stamina, Strenght}
 
 public abstract class ItemObject : ScriptableObject
 {
+    // display krivo napisan...
+    // ako ga pokusam rename-at potrga cijelu igru...
+    // neki je problem sa serializacijom...
     public Sprite uiDysplay;
     public bool Stacable;
     public ItemType type;

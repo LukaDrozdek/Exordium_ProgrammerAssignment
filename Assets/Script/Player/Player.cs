@@ -53,11 +53,9 @@ public class Player : MonoBehaviour
         var item = other.GetComponent<GroundItem>();
         if (item)
         {
-            Debug.Log("B");
             Item _item = new Item(item.item);
             if (inventory.AddItem(_item, 1))
             {
-                Debug.Log("A");
                 other.gameObject.SetActive(false);
                 setGameObjectInPool.Add(other.gameObject);
             }
