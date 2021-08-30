@@ -35,13 +35,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            inventory.SaveDatabase();
-            equipment.SaveDatabase();
+            SaveInventory();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            inventory.LoadDatabase();
-            equipment.LoadDatabase();
+            LoadInventory();
         }
         if(Input.GetKeyDown(KeyCode.Space))
         {
@@ -55,12 +53,13 @@ public class Player : MonoBehaviour
         var item = other.GetComponent<GroundItem>();
         if (item)
         {
+            Debug.Log("B");
             Item _item = new Item(item.item);
             if (inventory.AddItem(_item, 1))
             {
+                Debug.Log("A");
                 other.gameObject.SetActive(false);
                 setGameObjectInPool.Add(other.gameObject);
-               // Destroy(other.gameObject);
             }
             else
             {
@@ -70,6 +69,18 @@ public class Player : MonoBehaviour
 
             }
         }
+    }
+
+    public void SaveInventory()
+    {
+        inventory.SaveDatabase();
+        equipment.SaveDatabase();
+    }
+
+    public void LoadInventory()
+    {
+        inventory.LoadDatabase();
+        equipment.LoadDatabase();
     }
 
     public void UiInventoryOff()
@@ -150,11 +161,6 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-    public void aaa(Attributes attributes, InventorySlot _slot)
-    {
-      
-    }
-
 
     public void AttributeModifiedDisplay(Attribute attribute)
     {

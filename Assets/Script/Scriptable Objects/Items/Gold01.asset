@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39b4295a0256caf47b9cf95440958a29, type: 3}
-  m_Name: HealthPotion
+  m_Script: {fileID: 11500000, guid: eaa3d98e34595fe4e8807c2592e117c8, type: 3}
+  m_Name: Gold01
   m_EditorClassIdentifier: 
-  uiDysplay: {fileID: 3567876534770325076, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
+  uiDysplay: {fileID: -7722139153739847530, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
   Stacable: 1
-  type: 0
-  description: Restore health
+  type: 6
+  description: 
   data:
     Name: 
-    Id: 8
+    Id: 5
     buffs: []

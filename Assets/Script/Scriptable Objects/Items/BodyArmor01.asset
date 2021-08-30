@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06e662eeca725df4eb12cd9f86d2f066, type: 3}
-  m_Name: Boots
+  m_Name: BodyArmor01
   m_EditorClassIdentifier: 
-  uiDysplay: {fileID: -5551615300509145317, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
+  uiDysplay: {fileID: 2955297733908575915, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
   Stacable: 0
-  type: 4
+  type: 5
   description: 
   data:
     Name: 
-    Id: 2
+    Id: 1
     buffs:
-    - attributes: 2
-      value: 0
-      min: 5
-      max: 25
     - attributes: 0
       value: 0
       min: 5
-      max: 25
+      max: 20
+    - attributes: 3
+      value: 0
+      min: 2
+      max: 20

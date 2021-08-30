@@ -19,13 +19,13 @@ MonoBehaviour:
   description: 
   data:
     Name: 
-    Id: 6
+    Id: 12
     buffs:
     - attributes: 3
       value: 0
       min: 5
       max: 25
-    - attributes: 2
+    - attributes: 1
       value: 0
       min: 5
       max: 25
