@@ -2,24 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType
-{
-    Food,
-    Helmet,
-    Weapon,
-    Shield,
-    Boots,
-    Chest,
-    Default
-}
+public enum ItemType {Food, Helmet, Weapon, Shield, Boots, Chest, Default}
 
-public enum Attributes
-{
-    Agility,
-    Intellect,
-    Stamina,
-    Strenght
-}
+public enum Attributes{Agility, Intellect, Stamina, Strenght}
 
 public abstract class ItemObject : ScriptableObject
 {
@@ -66,7 +51,7 @@ public class Item
 }
 
 [System.Serializable]
-public class ItemBuff
+public class ItemBuff : IModifier
 {
     public Attributes attributes;
     public int value;
@@ -77,6 +62,11 @@ public class ItemBuff
         min = _min;
         max = _max;
         GenerateValue();
+    }
+
+    public void AddValue(ref int baseValue)
+    {
+        baseValue += value;
     }
 
     public void GenerateValue()

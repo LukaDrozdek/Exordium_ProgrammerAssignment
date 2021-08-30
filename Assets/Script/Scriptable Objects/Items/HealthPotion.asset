@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b4295a0256caf47b9cf95440958a29, type: 3}
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  Id: 3
   uiDysplay: {fileID: 3567876534770325076, guid: 6b9c7fc8ce873f048bc36a90411d9bbc,
     type: 3}
+  Stacable: 1
   type: 0
   description: Restore health
-  buffs: []
+  data:
+    Name: 
+    Id: 8
+    buffs: []
